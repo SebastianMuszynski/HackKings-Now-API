@@ -1,8 +1,7 @@
-class CreateNotifications < ActiveRecord::Migration
+class CreateMessages < ActiveRecord::Migration
   def change
-    create_table :notifications do |t|
-      t.string :name
-      t.string :description
+    create_table :messages do |t|
+      t.string :text
       t.references :event, index: true, foreign_key: true
       t.references :user,  index: true, foreign_key: true
 

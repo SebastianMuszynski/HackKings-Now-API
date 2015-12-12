@@ -1,4 +1,4 @@
-class Notification < ActiveRecord::Base
+class Message < ActiveRecord::Base
   belongs_to :event
   belongs_to :user
 end

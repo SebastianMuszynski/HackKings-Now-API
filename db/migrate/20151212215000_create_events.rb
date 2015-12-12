@@ -6,7 +6,7 @@ class CreateEvents < ActiveRecord::Migration
       t.decimal :latitude,   precision: 15, scale: 13
       t.decimal :longitude,  precision: 15, scale: 13
       t.integer :radius,     default:   1
-      t.references :users,   index: true, foreign_key: true
+      t.references :user,    index: true, foreign_key: true
 
       t.timestamps null: false
     end
