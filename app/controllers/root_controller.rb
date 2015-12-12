@@ -3,7 +3,8 @@ class RootController < ApplicationController
   def index
     paths  = [
       '/users',
-      '/events',
+      '/users/:user_id/events',
+      '/users/:user_id/events/:event_id/notifications'
     ]
     routes = paths.collect { |path| get_domain + path }
     render_json(routes)
