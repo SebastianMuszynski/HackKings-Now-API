@@ -13,6 +13,11 @@ class MessagesController < ApplicationController
   def create
     @message = Message.new(message_params)
     if @message.save
+      begin
+        Pusher.trigger(Event.find(message_params[:event_id]).name, 'new_message', { message: message_params[:text] })
+      rescue Pusher::Error => e
+        render_error("Could not create a message.")
+      end
       render_json(@message, :created)
     else
       render_json(@message.errors, :unprocessable_entity)
@@ -40,6 +45,6 @@ class MessagesController < ApplicationController
     end
 
     def message_params
-      params.require(:message).permit(:text, :event_id, :user_id)
+      params.permit(:text, :event_id)
     end
 end

@@ -13,6 +13,11 @@ class NotificationsController < ApplicationController
   def create
     @notification = Notification.new(notification_params)
     if @notification.save
+      begin
+        Pusher.trigger(Event.find(notification_params[:event_id]).name, 'new_notification', { message: notification_message })
+      rescue Pusher::Error => e
+        render_error("Could not create a notification.")
+      end
       render_json(@notification, :created)
     else
       render_json(@notification.errors, :unprocessable_entity)
@@ -35,11 +40,15 @@ class NotificationsController < ApplicationController
 
   private
 
+    def notification_message
+      notification_params[:name] + ": " + notification_params[:description]
+    end
+
     def set_notification
       @notification = Notification.find(params[:id])
     end
 
     def notification_params
-      params.require(:notification).permit(:name, :description, :user_id, :event_id)
+      params.permit(:name, :description, :event_id)
     end
 end
