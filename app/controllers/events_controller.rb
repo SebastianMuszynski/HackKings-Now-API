@@ -19,6 +19,17 @@ class EventsController < ApplicationController
     end
   end
 
+  def subscribe
+    if Event.find_by(name: event_params[:name]).nil?
+      @event = Event.new(event_params)
+      if @event.save
+        render_json(@event, :created)
+      else
+        render_json(@event.errors, :unprocessable_entity)
+      end
+    end
+  end
+
   def update
     @event = Event.find(params[:id])
     if @event.update(event_params)
@@ -40,6 +51,6 @@ class EventsController < ApplicationController
     end
 
     def event_params
-      params.require(:event).permit(:name, :description, :latitude, :longitude, :radius, :user_id)
+      params.require(:event).permit(:name, :description, :latitude, :longitude, :radius)
     end
 end

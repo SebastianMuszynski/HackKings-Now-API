@@ -22,12 +22,9 @@ ActiveRecord::Schema.define(version: 20151212222533) do
     t.decimal  "latitude",    precision: 15, scale: 13
     t.decimal  "longitude",   precision: 15, scale: 13
     t.integer  "radius",                                default: 1
-    t.integer  "user_id"
     t.datetime "created_at",                                        null: false
     t.datetime "updated_at",                                        null: false
   end
-
-  add_index "events", ["user_id"], name: "index_events_on_user_id", using: :btree
 
   create_table "messages", force: :cascade do |t|
     t.string   "text"
@@ -60,7 +57,6 @@ ActiveRecord::Schema.define(version: 20151212222533) do
     t.datetime "updated_at",                   null: false
   end
 
-  add_foreign_key "events", "users"
   add_foreign_key "messages", "events"
   add_foreign_key "messages", "users"
   add_foreign_key "notifications", "events"
