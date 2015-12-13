@@ -40,6 +40,6 @@ class EventsController < ApplicationController
     end
 
     def event_params
-      params.require(:event).permit(:name, :description, :latitude, :longitude, :radius. :user_id)
+      params.require(:event).permit(:name, :description, :latitude, :longitude, :radius, :user_id)
     end
 end
